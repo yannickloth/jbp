@@ -8,7 +8,7 @@
     </parent>
     <groupId>com.googlecode.jbp</groupId>
     <artifactId>jbp-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>jbp-parent</name>
     <description>jbp parent project with all configurations that are shared by the modules.</description>
