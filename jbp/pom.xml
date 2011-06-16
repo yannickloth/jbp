@@ -48,7 +48,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.1</version>
                 <configuration>
-                    <workingDirectory>${project.build.directory}/checkout/jbp</workingDirectory>
+                    <workingDirectory>${project.build.directory}/checkout/jbp/jbp</workingDirectory>
                 </configuration>
             </plugin>
         </plugins>
