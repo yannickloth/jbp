@@ -23,8 +23,8 @@
     </licenses>
     <scm>
         <url>https://github.com/yannickloth/jbp</url>
-        <connection>scm:git:https://yannickloth@github.com/yannickloth/jbp.git</connection>
-        <developerConnection>scm:git:https://yannickloth@github.com/yannickloth/jbp.git</developerConnection>
+        <connection>scm:git:https://github.com/yannickloth/jbp.git</connection>
+        <developerConnection>scm:git:https://github.com/yannickloth/jbp.git</developerConnection>
     </scm>
     <dependencyManagement>
         <dependencies>
