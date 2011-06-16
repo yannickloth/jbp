@@ -4,7 +4,7 @@
     <groupId>com.googlecode.jbp</groupId>
     <artifactId>jbp</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
