@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.googlecode.jbp</groupId>
-    <artifactId>jbp</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0.1-SNAPSHOT</version>
     <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
+        <artifactId>jbp-parent</artifactId>
+        <groupId>com.googlecode.jbp</groupId>
+        <version>1.0.1-SNAPSHOT</version>
+        <relativePath>../jbp-parent</relativePath>
     </parent>
-    <name>jbp</name>
-    <description>jbp root project</description>
+    <groupId>com.googlecode.jbp</groupId>
+    <artifactId>jbp-jpa</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
+    <name>jbp-jpa</name>
+    <description>jbp jpa repository implementation library</description>
     <url>http://code.google.com/p/jbp/</url>
-    <modules>
-        <module>jbp-parent</module>
-        <module>jbp-common</module>
-        <module>jbp-hibernate</module>
-        <module>jbp-jpa</module>
-    </modules>
     <licenses>
         <license>
             <name>Apache 2</name>
@@ -42,13 +36,14 @@
             <organizationUrl>http://www.littlej.biz</organizationUrl>
         </developer>
     </developers>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.1</version>
-            </plugin>
-        </plugins>
-    </build>
+    <dependencies>
+        <dependency>
+            <groupId>com.googlecode.jbp</groupId>
+            <artifactId>jbp-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+        </dependency>
+    </dependencies>
 </project>
