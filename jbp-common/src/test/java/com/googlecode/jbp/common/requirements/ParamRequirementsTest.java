@@ -131,34 +131,34 @@ public class ParamRequirementsTest {
     @Test(description = "should throw an IllegalArgumentException, as the parameter is negative",
     expectedExceptions = {IllegalArgumentException.class})
     public void testNotNegativeNorZeroWithNegativeInteger() {
-        ParamRequirements.INSTANCE.requireNotNegativeNorZero(-10);
+        ParamRequirements.INSTANCE.requireNotNegative(-10);
     }
 
     @Test(description = "should do nothing special, as the parameter is positive")
     public void testNotNegativeNorZeroWithPositiveInteger() {
-        ParamRequirements.INSTANCE.requireNotNegativeNorZero(10);
+        ParamRequirements.INSTANCE.requireNotNegative(10);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is zero",
     expectedExceptions = {IllegalArgumentException.class})
     public void testNotNegativeNorZeroWithZeroInteger() {
-        ParamRequirements.INSTANCE.requireNotNegativeNorZero(0);
+        ParamRequirements.INSTANCE.requireNotNegative(0);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is negative",
     expectedExceptions = {IllegalArgumentException.class})
     public void testNotNegativeWithNegativeInteger() {
-        ParamRequirements.INSTANCE.requireNotNegative(-10);
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(-10);
     }
 
     @Test(description = "should do nothing special, as the parameter is positive")
     public void testNotNegativeWithPositiveInteger() {
-        ParamRequirements.INSTANCE.requireNotNegative(10);
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(10);
     }
 
     @Test(description = "should do nothing special, as the parameter is zero")
     public void testNotNegativeWithZeroInteger() {
-        ParamRequirements.INSTANCE.requireNotNegative(0);
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(0);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is null",
@@ -174,35 +174,35 @@ public class ParamRequirementsTest {
 
     @Test(description = "should do nothing special, as the parameter is negative")
     public void testNotPositiveNorZeroWithNegativeInteger() {
-        ParamRequirements.INSTANCE.requireNotPositiveNorZero(-10);
-    }
-
-    @Test(description = "should throw an IllegalArgumentException, as the parameter is positive",
-    expectedExceptions = {IllegalArgumentException.class})
-    public void testNotPositiveNorZeroWithPositiveInteger() {
-        ParamRequirements.INSTANCE.requireNotPositiveNorZero(10);
-    }
-
-    @Test(description = "should throw an IllegalArgumentException, as the parameter is zero",
-    expectedExceptions = {IllegalArgumentException.class})
-    public void testNotPositiveNorZeroWithZeroInteger() {
-        ParamRequirements.INSTANCE.requireNotPositiveNorZero(0);
-    }
-
-    @Test(description = "should do nothing special, as the parameter is negative")
-    public void testNotPositiveWithNegativeInteger() {
         ParamRequirements.INSTANCE.requireNotPositive(-10);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is positive",
     expectedExceptions = {IllegalArgumentException.class})
-    public void testNotPositiveWithPositiveInteger() {
+    public void testNotPositiveNorZeroWithPositiveInteger() {
         ParamRequirements.INSTANCE.requireNotPositive(10);
+    }
+
+    @Test(description = "should throw an IllegalArgumentException, as the parameter is zero",
+    expectedExceptions = {IllegalArgumentException.class})
+    public void testNotPositiveNorZeroWithZeroInteger() {
+        ParamRequirements.INSTANCE.requireNotPositive(0);
+    }
+
+    @Test(description = "should do nothing special, as the parameter is negative")
+    public void testNotPositiveWithNegativeInteger() {
+        ParamRequirements.INSTANCE.requireNotStrictlyPositive(-10);
+    }
+
+    @Test(description = "should throw an IllegalArgumentException, as the parameter is positive",
+    expectedExceptions = {IllegalArgumentException.class})
+    public void testNotPositiveWithPositiveInteger() {
+        ParamRequirements.INSTANCE.requireNotStrictlyPositive(10);
     }
 
     @Test(description = "should do nothing special, as the parameter is zero")
     public void testNotPositiveWithZeroInteger() {
-        ParamRequirements.INSTANCE.requireNotPositive(0);
+        ParamRequirements.INSTANCE.requireNotStrictlyPositive(0);
     }
 
     @Test(description = "should do nothing special, as the parameter is not zero")

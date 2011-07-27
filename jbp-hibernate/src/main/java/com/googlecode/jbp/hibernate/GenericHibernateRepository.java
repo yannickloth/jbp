@@ -123,8 +123,8 @@ public class GenericHibernateRepository implements IGenericRepository {
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> List<DomainModel> retrieveAll(final Class<DomainModel> persistentClassParam, final Page pageParam) {
         ParamRequirements.INSTANCE.requireNotNull(pageParam);
-        ParamRequirements.INSTANCE.requireNotNegative(pageParam.getFirstResult());
-        ParamRequirements.INSTANCE.requireNotNegative(pageParam.getMaxResults());
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getFirstResult());
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getMaxResults());
         getSession().flush();
         return addPagingToCriteria(getSession().createCriteria(persistentClassParam), pageParam)
                 .list();
@@ -133,8 +133,8 @@ public class GenericHibernateRepository implements IGenericRepository {
     protected final Criteria addPagingToCriteria(final Criteria criteriaParam, final Page pageParam) {
         ParamRequirements.INSTANCE.requireNotNull(criteriaParam);
         ParamRequirements.INSTANCE.requireNotNull(pageParam);
-        ParamRequirements.INSTANCE.requireNotNegative(pageParam.getFirstResult());
-        ParamRequirements.INSTANCE.requireNotNegative(pageParam.getMaxResults());
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getFirstResult());
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getMaxResults());
         criteriaParam.setFirstResult(pageParam.getFirstResult()).setMaxResults(pageParam.getMaxResults());
         return criteriaParam;
     }

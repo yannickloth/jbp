@@ -57,7 +57,7 @@ public final class Page implements Serializable {
     }
 
     public final Page firstResult(final int firstResultParam) {
-        ParamRequirements.INSTANCE.requireNotNegative(firstResultParam);
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(firstResultParam);
         firstResult = firstResultParam;
         return this;
     }
@@ -81,7 +81,7 @@ public final class Page implements Serializable {
     }
 
     public final Page maxResults(final int maxResultsParam) {
-        ParamRequirements.INSTANCE.requireNotNegativeNorZero(maxResultsParam);
+        ParamRequirements.INSTANCE.requireNotNegative(maxResultsParam);
         maxResults = maxResultsParam;
         return this;
     }

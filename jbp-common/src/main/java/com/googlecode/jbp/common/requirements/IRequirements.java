@@ -202,8 +202,26 @@ public interface IRequirements {
      * @param n             The specified number.
      * @param messagesParam additional messages with more detail.
      */
-    <T extends Number> T requireNotNegative(final T n,
-                                            final String... messagesParam);
+    <T extends Number> T requireNotStrictlyNegative(final T n,
+                                                    final String... messagesParam);
+
+    /**
+     * Checks that the specified number is negative (&lt;0).
+     *
+     * @param n             The specified number.
+     * @param messagesParam additional messages with more detail.
+     */
+    <T extends Number> T requireStrictlyNegative(final T n,
+                                                 final String... messagesParam);
+
+    /**
+     * Checks that the specified number is negative or zero (&lt;=0).
+     *
+     * @param n             The specified number.
+     * @param messagesParam additional messages with more detail.
+     */
+    <T extends Number> T requireNegative(final T n,
+                                         final String... messagesParam);
 
     /**
      * Checks that the specified number is not negative (&lt;0) nor zero (0).
@@ -211,8 +229,8 @@ public interface IRequirements {
      * @param n             The specified number.
      * @param messagesParam additional messages with more detail.
      */
-    <T extends Number> T requireNotNegativeNorZero(final T n,
-                                                   final String... messagesParam);
+    <T extends Number> T requireNotNegative(final T n,
+                                            final String... messagesParam);
 
     /**
      * Checks that an object is not null. Example: <blockquote>
@@ -232,13 +250,29 @@ public interface IRequirements {
     <T> T requireNotNull(final T objParam, final String... messagesParam);
 
     /**
-     * Checks that the specified number is not positive (&gt;0).
+     * Checks that the specified number is not strictly positive (&gt;0).
      *
      * @param messagesParam additional messages with more detail.
      * @param n             The specified number.
      */
-    <T extends Number> T requireNotPositive(final T n,
-                                            final String... messagesParam);
+    <T extends Number> T requireNotStrictlyPositive(final T n,
+                                                    final String... messagesParam);
+
+    /**
+     * Checks that the specified number is positive (&gt;0).
+     *
+     * @param n             The specified number.
+     * @param messagesParam additional messages with more detail.
+     */
+    <T extends Number> T requireStrictlyPositive(final T n, final String... messagesParam);
+
+    /**
+     * Checks that the specified number is positive or zero (&gt;=0).
+     *
+     * @param n             The specified number.
+     * @param messagesParam additional messages with more detail.
+     */
+    <T extends Number> T requirePositive(final T n, final String... messagesParam);
 
     /**
      * Checks that the specified number is not positive (&gt;0) nor zero (0).
@@ -246,8 +280,8 @@ public interface IRequirements {
      * @param messagesParam additional messages with more detail.
      * @param n             The specified number.
      */
-    <T extends Number> T requireNotPositiveNorZero(final T n,
-                                                   final String... messagesParam);
+    <T extends Number> T requireNotPositive(final T n,
+                                            final String... messagesParam);
 
     /**
      * Checks that the specified number is not zero (0).

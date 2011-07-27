@@ -37,7 +37,7 @@ public final class ResultHolder<ID extends Serializable, T extends IIdentifiable
 
     public ResultHolder(final List<T> resultsParam, final int resultQuantityParam) {
         ParamRequirements.INSTANCE.requireNotNull(resultsParam);
-        ParamRequirements.INSTANCE.requireNotNegative(resultQuantityParam);
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(resultQuantityParam);
         results = Collections.unmodifiableList(resultsParam);
         resultQuantity = resultQuantityParam;
     }

@@ -275,8 +275,8 @@ public abstract class AbstractRequirements implements IRequirements {
         return filePathParam;
     }
 
-    public final <T extends Number> T requireNotNegative(final T n,
-                                                         final String... messagesParam) {
+    public final <T extends Number> T requireNotStrictlyNegative(final T n,
+                                                                 final String... messagesParam) {
         requireNotNull(n);
         if (0 > n.doubleValue()) {
             final String message = concatenateStrings(
@@ -286,8 +286,8 @@ public abstract class AbstractRequirements implements IRequirements {
         return n;
     }
 
-    public final <T extends Number> T requireNotNegativeNorZero(final T n,
-                                                                final String... messagesParam) {
+    public final <T extends Number> T requireNotNegative(final T n,
+                                                         final String... messagesParam) {
         requireNotNull(n);
         if (0 >= n.doubleValue()) {
             final String message = concatenateStrings(
@@ -308,8 +308,48 @@ public abstract class AbstractRequirements implements IRequirements {
         return objParam;
     }
 
-    public final <T extends Number> T requireNotPositive(final T n,
-                                                         final String... messagesParam) {
+    public <T extends Number> T requireStrictlyNegative(final T n, final String... messagesParam) {
+        requireNotNull(n);
+        if (0 <= n.doubleValue()) {
+            final String message = concatenateStrings(
+                    "Requires a number that is strictly negative.", messagesParam);
+            onConditionNotMet(message);
+        }
+        return n;
+    }
+
+    public <T extends Number> T requireNegative(final T n, final String... messagesParam) {
+        requireNotNull(n);
+        if (0 < n.doubleValue()) {
+            final String message = concatenateStrings(
+                    "Requires a number that is negative.", messagesParam);
+            onConditionNotMet(message);
+        }
+        return n;
+    }
+
+    public <T extends Number> T requireStrictlyPositive(final T n, final String... messagesParam) {
+        requireNotNull(n);
+        if (0 >= n.doubleValue()) {
+            final String message = concatenateStrings(
+                    "Requires a number that is strictly positive.", messagesParam);
+            onConditionNotMet(message);
+        }
+        return n;
+    }
+
+    public <T extends Number> T requirePositive(final T n, final String... messagesParam) {
+        requireNotNull(n);
+        if (0 > n.doubleValue()) {
+            final String message = concatenateStrings(
+                    "Requires a number that is positive.", messagesParam);
+            onConditionNotMet(message);
+        }
+        return n;
+    }
+
+    public final <T extends Number> T requireNotStrictlyPositive(final T n,
+                                                                 final String... messagesParam) {
         requireNotNull(n);
         if (0 < n.doubleValue()) {
             final String message = concatenateStrings(
@@ -319,8 +359,8 @@ public abstract class AbstractRequirements implements IRequirements {
         return n;
     }
 
-    public final <T extends Number> T requireNotPositiveNorZero(final T n,
-                                                                final String... messagesParam) {
+    public final <T extends Number> T requireNotPositive(final T n,
+                                                         final String... messagesParam) {
         requireNotNull(n);
         if (0 <= n.doubleValue()) {
             final String message = concatenateStrings(

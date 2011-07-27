@@ -147,8 +147,8 @@ public abstract class AbstractJpaRepository<ID extends Serializable, DomainModel
     protected final TypedQuery addPagingToQuery(final TypedQuery queryParam, final Page pageParam) {
         ParamRequirements.INSTANCE.requireNotNull(queryParam);
         ParamRequirements.INSTANCE.requireNotNull(pageParam);
-        ParamRequirements.INSTANCE.requireNotNegative(pageParam.getFirstResult());
-        ParamRequirements.INSTANCE.requireNotNegative(pageParam.getMaxResults());
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getFirstResult());
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getMaxResults());
         queryParam.setFirstResult(pageParam.getFirstResult()).setMaxResults(pageParam.getMaxResults());
         return queryParam;
     }

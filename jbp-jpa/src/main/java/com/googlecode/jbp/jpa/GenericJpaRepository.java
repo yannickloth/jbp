@@ -132,8 +132,8 @@ public class GenericJpaRepository implements IGenericRepository {
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> List<DomainModel> retrieveAll(final Class<DomainModel> persistentClassParam, final Page pageParam) {
         ParamRequirements.INSTANCE.requireNotNull(pageParam);
-        ParamRequirements.INSTANCE.requireNotNegative(pageParam.getFirstResult());
-        ParamRequirements.INSTANCE.requireNotNegative(pageParam.getMaxResults());
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getFirstResult());
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getMaxResults());
         getEntityManager().flush();
         final TypedQuery<DomainModel> q = buildQueryForRetrieveAll(persistentClassParam);
         return addPagingToQuery(q, pageParam).getResultList();
@@ -142,8 +142,8 @@ public class GenericJpaRepository implements IGenericRepository {
     protected final TypedQuery addPagingToQuery(final TypedQuery queryParam, final Page pageParam) {
         ParamRequirements.INSTANCE.requireNotNull(queryParam);
         ParamRequirements.INSTANCE.requireNotNull(pageParam);
-        ParamRequirements.INSTANCE.requireNotNegative(pageParam.getFirstResult());
-        ParamRequirements.INSTANCE.requireNotNegative(pageParam.getMaxResults());
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getFirstResult());
+        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getMaxResults());
         queryParam.setFirstResult(pageParam.getFirstResult()).setMaxResults(pageParam.getMaxResults());
         return queryParam;
     }
