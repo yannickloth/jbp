@@ -60,7 +60,7 @@ public final class Page implements Serializable {
     }
 
     public final Page firstResult(final int firstResultParam) {
-        PARAM_REQ.requireNotStrictlyNegative(firstResultParam);
+        PARAM_REQ.Number.requireNotStrictlyNegative(firstResultParam, "The index of the first result to fetch must be 0 or positive.");
         firstResult = firstResultParam;
         return this;
     }
@@ -84,7 +84,7 @@ public final class Page implements Serializable {
     }
 
     public final Page maxResults(final int maxResultsParam) {
-        PARAM_REQ.requireNotNegative(maxResultsParam);
+        PARAM_REQ.Number.requireNotNegative(maxResultsParam, "The maximum amount of results to fetch must be >0.");
         maxResults = maxResultsParam;
         return this;
     }

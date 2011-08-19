@@ -33,7 +33,7 @@ public class BooleanFunctions {
      * {@code true}, {@code false} else.
      */
     public static boolean conjunction(final boolean... predicatesParam) {
-        PARAM_REQ.requireTrue(predicatesParam.length > 0);
+        PARAM_REQ.Logic.requireTrue(predicatesParam.length > 0, "The length of the predicates array must be >0.");
         for (final boolean current : predicatesParam) {
             if (!current) {
                 return false;
@@ -51,7 +51,7 @@ public class BooleanFunctions {
      * {@code true}, {@code false} else.
      */
     public static boolean disjunction(final boolean... predicatesParam) {
-        PARAM_REQ.requireTrue(predicatesParam.length > 0);
+        PARAM_REQ.Logic.requireTrue(predicatesParam.length > 0, "The length of the predicates array must be >0.");
         boolean disjunction = false;
         for (int i = 0; i < predicatesParam.length && !disjunction; ++i) {
             disjunction = disjunction || predicatesParam[i];
@@ -67,7 +67,7 @@ public class BooleanFunctions {
      *         {@code false} else.
      */
     public static boolean equivalent(final boolean... predicatesParam) {
-        PARAM_REQ.requireTrue(predicatesParam.length > 0);
+        PARAM_REQ.Logic.requireTrue(predicatesParam.length > 0, "The length of the predicates array must be >0.");
         boolean equivalent = true;
         for (int i = 0; i < predicatesParam.length - 1 && equivalent; ++i) {
             equivalent = !exclusiveDisjunction(predicatesParam[i],
@@ -99,7 +99,7 @@ public class BooleanFunctions {
      *         predicates are {@code true}, {@code false} else.
      */
     public static boolean majority(final boolean... predicatesParam) {
-        PARAM_REQ.requireTrue(predicatesParam.length > 0);
+        PARAM_REQ.Logic.requireTrue(predicatesParam.length > 0, "The length of the predicates array must be >0.");
         int count = 0;
         final int halfQuantity = predicatesParam.length / 2;
         for (int i = 0; i < predicatesParam.length && count <= halfQuantity; ++i) {
@@ -158,7 +158,7 @@ public class BooleanFunctions {
      *         order of the elements is unchanged.
      */
     public static boolean[] not(final boolean... predicatesParam) {
-        PARAM_REQ.requireTrue(predicatesParam.length > 0);
+        PARAM_REQ.Logic.requireTrue(predicatesParam.length > 0, "The length of the predicates array must be >0.");
         final boolean[] notPredicates = new boolean[predicatesParam.length];
         for (int i = 0; i < predicatesParam.length; ++i) {
             notPredicates[i] = !predicatesParam[i];

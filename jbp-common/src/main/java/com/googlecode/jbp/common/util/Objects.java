@@ -170,7 +170,7 @@ public final class Objects {
      * @see Objects#toString(Object)
      */
     public static String toString(final Object objectParam, final String nullDefaultParam) {
-        PARAM_REQ.requireNotNull(nullDefaultParam);
+        PARAM_REQ.Object.requireNotNull(nullDefaultParam, "A default value must be set to handle the case when the object is null.");
         return objectParam != null ? objectParam.toString() : nullDefaultParam;
     }
 
