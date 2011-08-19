@@ -20,7 +20,6 @@ import com.googlecode.jbp.common.repository.IGenericRepository;
 import com.googlecode.jbp.common.repository.IIdentifiable;
 import com.googlecode.jbp.common.repository.IRepository;
 import com.googlecode.jbp.common.repository.Page;
-import com.googlecode.jbp.common.requirements.ParamRequirements;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,6 +29,8 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+
+import static com.googlecode.jbp.common.requirements.ParamRequirements.PARAM_REQ;
 
 /**
  * Abstract data access object implemented using Hibernate. This abstract class
@@ -64,15 +65,15 @@ public abstract class AbstractHibernateRepository<ID extends Serializable, Domai
      */
     public AbstractHibernateRepository(final SessionFactory sessionFactoryParam, final IGenericRepository genericRepositoryParam) {
         super();
-        ParamRequirements.INSTANCE.requireNotNull(sessionFactoryParam);
-        ParamRequirements.INSTANCE.requireNotNull(genericRepositoryParam);
+        PARAM_REQ.requireNotNull(sessionFactoryParam);
+        PARAM_REQ.requireNotNull(genericRepositoryParam);
         genericHibernateRepository = genericRepositoryParam;
         sessionFactory = sessionFactoryParam;
     }
 
     public final DomainModel create(final DomainModel entity) {
-        ParamRequirements.INSTANCE.requireNotNull(entity);
-        ParamRequirements.INSTANCE.requireInstanceOf(entity,
+        PARAM_REQ.requireNotNull(entity);
+        PARAM_REQ.requireInstanceOf(entity,
                 getPersistentClass());
         return genericHibernateRepository.create(entity);
     }
@@ -83,7 +84,7 @@ public abstract class AbstractHibernateRepository<ID extends Serializable, Domai
      * @return The created criteria.
      */
     protected final Criteria createCriteria() {
-        ParamRequirements.INSTANCE.requireNotNull(getPersistentClass());
+        PARAM_REQ.requireNotNull(getPersistentClass());
         return getSession().createCriteria(getPersistentClass());
     }
 
@@ -92,7 +93,7 @@ public abstract class AbstractHibernateRepository<ID extends Serializable, Domai
     }
 
     public void delete(final DomainModel entity) {
-        ParamRequirements.INSTANCE.requireInstanceOf(entity, getPersistentClass());
+        PARAM_REQ.requireInstanceOf(entity, getPersistentClass());
         genericHibernateRepository.delete(entity);
     }
 
@@ -105,13 +106,13 @@ public abstract class AbstractHibernateRepository<ID extends Serializable, Domai
     }
 
     public boolean exists(final DomainModel entity) {
-        ParamRequirements.INSTANCE.requireInstanceOf(entity,
+        PARAM_REQ.requireInstanceOf(entity,
                 getPersistentClass());
         return genericHibernateRepository.exists(entity);
     }
 
     public boolean exists(final ID id) {
-        ParamRequirements.INSTANCE.requireNotNull(id);
+        PARAM_REQ.requireNotNull(id);
         return genericHibernateRepository.exists(id, getPersistentClass());
     }
 
@@ -154,10 +155,10 @@ public abstract class AbstractHibernateRepository<ID extends Serializable, Domai
      * @return The specified criteria, with paging set.
      */
     protected final Criteria addPagingToCriteria(final Criteria criteriaParam, final Page pageParam) {
-        ParamRequirements.INSTANCE.requireNotNull(criteriaParam);
-        ParamRequirements.INSTANCE.requireNotNull(pageParam);
-        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getFirstResult());
-        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getMaxResults());
+        PARAM_REQ.requireNotNull(criteriaParam);
+        PARAM_REQ.requireNotNull(pageParam);
+        PARAM_REQ.requireNotStrictlyNegative(pageParam.getFirstResult());
+        PARAM_REQ.requireNotStrictlyNegative(pageParam.getMaxResults());
         criteriaParam.setFirstResult(pageParam.getFirstResult()).setMaxResults(pageParam.getMaxResults());
         return criteriaParam;
     }
@@ -171,7 +172,7 @@ public abstract class AbstractHibernateRepository<ID extends Serializable, Domai
     }
 
     public void update(final DomainModel entity) {
-        ParamRequirements.INSTANCE.requireInstanceOf(entity,
+        PARAM_REQ.requireInstanceOf(entity,
                 getPersistentClass());
         genericHibernateRepository.update(entity);
     }

@@ -19,7 +19,6 @@ import com.googlecode.jbp.common.constants.CompilerWarnings;
 import com.googlecode.jbp.common.repository.IGenericRepository;
 import com.googlecode.jbp.common.repository.IIdentifiable;
 import com.googlecode.jbp.common.repository.Page;
-import com.googlecode.jbp.common.requirements.ParamRequirements;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -31,9 +30,12 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import static com.googlecode.jbp.common.requirements.Reqs.PARAM_REQ;
+
 /**
  * Generic Hibernate repository class. Not specific to a given entity class.
  * Intended to be used for usual CRUD operations.
+ *
  * @author Yannick LOTH   - yannick AT littlej.biz -
  */
 public class GenericHibernateRepository implements IGenericRepository {
@@ -51,7 +53,7 @@ public class GenericHibernateRepository implements IGenericRepository {
 
     public GenericHibernateRepository(final SessionFactory sessionFactoryParam) {
         super();
-        ParamRequirements.INSTANCE.requireNotNull(sessionFactoryParam);
+        PARAM_REQ.requireNotNull(sessionFactoryParam);
         sessionFactory = sessionFactoryParam;
     }
 
@@ -60,25 +62,25 @@ public class GenericHibernateRepository implements IGenericRepository {
     }
 
     public final <ID extends Serializable, DomainModel extends IIdentifiable<ID>> DomainModel create(final DomainModel entity) {
-        ParamRequirements.INSTANCE.requireNotNull(entity);
+        PARAM_REQ.requireNotNull(entity);
         getSession().persist(entity);
         return entity;
     }
 
     protected final <ID extends Serializable, DomainModel extends IIdentifiable<ID>, PersistenceModel extends DomainModel> Criteria createCriteria(final Class<PersistenceModel> persistentClassParam) {
-        ParamRequirements.INSTANCE.requireNotNull(persistentClassParam);
+        PARAM_REQ.requireNotNull(persistentClassParam);
         return getSession().createCriteria(persistentClassParam);
     }
 
     public final <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void delete(final Collection<DomainModel> entities) {
-        ParamRequirements.INSTANCE.requireNotNull(entities);
+        PARAM_REQ.requireNotNull(entities);
         for (final DomainModel current : entities) {
             delete(current);
         }
     }
 
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void delete(final DomainModel entity) {
-        ParamRequirements.INSTANCE.requireNotNull(entity);
+        PARAM_REQ.requireNotNull(entity);
         final DomainModel merged = (DomainModel) getSession().merge(
                 entity);
         getSession().flush();
@@ -87,7 +89,7 @@ public class GenericHibernateRepository implements IGenericRepository {
     }
 
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void delete(final ID id, final Class<DomainModel> persistentClassParam) {
-        ParamRequirements.INSTANCE.requireNotNull(id);
+        PARAM_REQ.requireNotNull(id);
         final DomainModel entity = (DomainModel) getSession().get(
                 persistentClassParam, id);
         if (entity != null) {
@@ -100,12 +102,12 @@ public class GenericHibernateRepository implements IGenericRepository {
     }
 
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> boolean exists(final DomainModel entity) {
-        ParamRequirements.INSTANCE.requireNotNull(entity);
+        PARAM_REQ.requireNotNull(entity);
         return getSession().get(entity.getClass(), entity.getId()) != null;
     }
 
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> boolean exists(final ID id, final Class<DomainModel> persistentClassParam) {
-        ParamRequirements.INSTANCE.requireNotNull(id);
+        PARAM_REQ.requireNotNull(id);
         return getSession().get(persistentClassParam, id) != null;
     }
 
@@ -122,26 +124,26 @@ public class GenericHibernateRepository implements IGenericRepository {
 
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> List<DomainModel> retrieveAll(final Class<DomainModel> persistentClassParam, final Page pageParam) {
-        ParamRequirements.INSTANCE.requireNotNull(pageParam);
-        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getFirstResult());
-        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getMaxResults());
+        PARAM_REQ.requireNotNull(pageParam);
+        PARAM_REQ.requireNotStrictlyNegative(pageParam.getFirstResult());
+        PARAM_REQ.requireNotStrictlyNegative(pageParam.getMaxResults());
         getSession().flush();
         return addPagingToCriteria(getSession().createCriteria(persistentClassParam), pageParam)
                 .list();
     }
 
     protected final Criteria addPagingToCriteria(final Criteria criteriaParam, final Page pageParam) {
-        ParamRequirements.INSTANCE.requireNotNull(criteriaParam);
-        ParamRequirements.INSTANCE.requireNotNull(pageParam);
-        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getFirstResult());
-        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getMaxResults());
+        PARAM_REQ.requireNotNull(criteriaParam);
+        PARAM_REQ.requireNotNull(pageParam);
+        PARAM_REQ.requireNotStrictlyNegative(pageParam.getFirstResult());
+        PARAM_REQ.requireNotStrictlyNegative(pageParam.getMaxResults());
         criteriaParam.setFirstResult(pageParam.getFirstResult()).setMaxResults(pageParam.getMaxResults());
         return criteriaParam;
     }
 
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> DomainModel retrieveById(final Class<DomainModel> persistentClassParam, final ID id) {
-        ParamRequirements.INSTANCE.requireNotNull(id);
+        PARAM_REQ.requireNotNull(id);
         final DomainModel entity = (DomainModel) getSession().get(
                 persistentClassParam, id);
         if (entity != null) {
@@ -152,7 +154,7 @@ public class GenericHibernateRepository implements IGenericRepository {
 
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void update(final Collection<DomainModel> entities) {
-        ParamRequirements.INSTANCE.requireNotNull(entities);
+        PARAM_REQ.requireNotNull(entities);
         for (final DomainModel current : entities) {
             final DomainModel merged = (DomainModel) getSession()
                     .merge(current);
@@ -162,7 +164,7 @@ public class GenericHibernateRepository implements IGenericRepository {
 
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void update(final DomainModel entity) {
-        ParamRequirements.INSTANCE.requireNotNull(entity);
+        PARAM_REQ.requireNotNull(entity);
         final DomainModel merged = (DomainModel) getSession().merge(
                 entity);
         getSession().saveOrUpdate(merged);

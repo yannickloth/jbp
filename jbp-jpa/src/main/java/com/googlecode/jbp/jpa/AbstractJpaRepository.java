@@ -20,7 +20,6 @@ import com.googlecode.jbp.common.repository.IGenericRepository;
 import com.googlecode.jbp.common.repository.IIdentifiable;
 import com.googlecode.jbp.common.repository.IRepository;
 import com.googlecode.jbp.common.repository.Page;
-import com.googlecode.jbp.common.requirements.ParamRequirements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +29,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+
+import static com.googlecode.jbp.common.requirements.ParamRequirements.PARAM_REQ;
 
 /**
  * Abstract data access object implemented using Hibernate. This abstract class
@@ -64,15 +65,15 @@ public abstract class AbstractJpaRepository<ID extends Serializable, DomainModel
      */
     public AbstractJpaRepository(final EntityManager entityManagerParam, final IGenericRepository genericRepositoryParam) {
         super();
-        ParamRequirements.INSTANCE.requireNotNull(entityManagerParam);
-        ParamRequirements.INSTANCE.requireNotNull(genericRepositoryParam);
+        PARAM_REQ.requireNotNull(entityManagerParam);
+        PARAM_REQ.requireNotNull(genericRepositoryParam);
         genericHibernateRepository = genericRepositoryParam;
         entityManager = entityManagerParam;
     }
 
     public final DomainModel create(final DomainModel entity) {
-        ParamRequirements.INSTANCE.requireNotNull(entity);
-        ParamRequirements.INSTANCE.requireInstanceOf(entity,
+        PARAM_REQ.requireNotNull(entity);
+        PARAM_REQ.requireInstanceOf(entity,
                 getPersistentClass());
         return genericHibernateRepository.create(entity);
     }
@@ -83,7 +84,7 @@ public abstract class AbstractJpaRepository<ID extends Serializable, DomainModel
      * @return The created criteria.
      */
     protected final <ID extends Serializable, DomainModel extends IIdentifiable<ID>> CriteriaQuery<DomainModel> createCriteria(final Class<DomainModel> persistentClassParam) {
-        ParamRequirements.INSTANCE.requireNotNull(persistentClassParam);
+        PARAM_REQ.requireNotNull(persistentClassParam);
         return entityManager.getCriteriaBuilder().createQuery(persistentClassParam);
     }
 
@@ -92,7 +93,7 @@ public abstract class AbstractJpaRepository<ID extends Serializable, DomainModel
     }
 
     public void delete(final DomainModel entity) {
-        ParamRequirements.INSTANCE.requireInstanceOf(entity, getPersistentClass());
+        PARAM_REQ.requireInstanceOf(entity, getPersistentClass());
         genericHibernateRepository.delete(entity);
     }
 
@@ -105,13 +106,13 @@ public abstract class AbstractJpaRepository<ID extends Serializable, DomainModel
     }
 
     public boolean exists(final DomainModel entity) {
-        ParamRequirements.INSTANCE.requireInstanceOf(entity,
+        PARAM_REQ.requireInstanceOf(entity,
                 getPersistentClass());
         return genericHibernateRepository.exists(entity);
     }
 
     public boolean exists(final ID id) {
-        ParamRequirements.INSTANCE.requireNotNull(id);
+        PARAM_REQ.requireNotNull(id);
         return genericHibernateRepository.exists(id, getPersistentClass());
     }
 
@@ -145,10 +146,10 @@ public abstract class AbstractJpaRepository<ID extends Serializable, DomainModel
      * @return The specified criteria, with paging set.
      */
     protected final TypedQuery addPagingToQuery(final TypedQuery queryParam, final Page pageParam) {
-        ParamRequirements.INSTANCE.requireNotNull(queryParam);
-        ParamRequirements.INSTANCE.requireNotNull(pageParam);
-        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getFirstResult());
-        ParamRequirements.INSTANCE.requireNotStrictlyNegative(pageParam.getMaxResults());
+        PARAM_REQ.requireNotNull(queryParam);
+        PARAM_REQ.requireNotNull(pageParam);
+        PARAM_REQ.requireNotStrictlyNegative(pageParam.getFirstResult());
+        PARAM_REQ.requireNotStrictlyNegative(pageParam.getMaxResults());
         queryParam.setFirstResult(pageParam.getFirstResult()).setMaxResults(pageParam.getMaxResults());
         return queryParam;
     }
@@ -162,7 +163,7 @@ public abstract class AbstractJpaRepository<ID extends Serializable, DomainModel
     }
 
     public void update(final DomainModel entity) {
-        ParamRequirements.INSTANCE.requireInstanceOf(entity,
+        PARAM_REQ.requireInstanceOf(entity,
                 getPersistentClass());
         genericHibernateRepository.update(entity);
     }
