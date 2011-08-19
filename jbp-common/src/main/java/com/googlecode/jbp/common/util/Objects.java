@@ -15,13 +15,15 @@
  */
 package com.googlecode.jbp.common.util;
 
-import com.googlecode.jbp.common.requirements.ParamRequirements;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.googlecode.jbp.common.requirements.Reqs.PARAM_REQ;
+
 /**
  * Backports some methods of the {@code java.util.Objects} class provided in the JDK 7.
+ *
  * @author Yannick LOTH   - yannick AT littlej.biz -
  */
 public final class Objects {
@@ -30,45 +32,39 @@ public final class Objects {
      * Returns 0 if the arguments are identical and {@code c.compare(a, b)}
      * otherwise. Consequently, if both arguments are {@code null} 0 is
      * returned.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * Note that if one of the arguments is {@code null}, a
      * {@code NullPointerException} may or may not be thrown depending on what
      * ordering policy, if any, the {@link Comparator Comparator} chooses to
      * have for {@code null} values.
-     * 
-     * @param <T>
-     *            the type of the objects being compared
-     * @param firstParam
-     *            an object
-     * @param secondParam
-     *            an object to be compared with {@code a}
-     * @param comparatorParam
-     *            the {@code Comparator} to compare the first two arguments
+     *
+     * @param <T>             the type of the objects being compared
+     * @param firstParam      an object
+     * @param secondParam     an object to be compared with {@code a}
+     * @param comparatorParam the {@code Comparator} to compare the first two arguments
      * @return 0 if the arguments are identical and {@code c.compare(a, b)}
      *         otherwise.
      * @see Comparable
      * @see Comparator
      */
     public static <T> int compare(final T firstParam, final T secondParam,
-            final Comparator<? super T> comparatorParam) {
+                                  final Comparator<? super T> comparatorParam) {
         return firstParam == secondParam ? 0 : comparatorParam.compare(firstParam, secondParam);
     }
 
     /**
      * Returns {@code true} if the arguments are deeply equal to each other and
      * {@code false} otherwise.
-     * 
+     * <p/>
      * Two {@code null} values are deeply equal. If both arguments are arrays,
      * the algorithm in {@link Arrays#deepEquals(Object[], Object[])
      * Arrays.deepEquals} is used to determine equality. Otherwise, equality is
      * determined by using the {@link Object#equals equals} method of the first
      * argument.
-     * 
-     * @param firstParam
-     *            an object
-     * @param secondParam
-     *            an object to be compared with {@code a} for deep equality
+     *
+     * @param firstParam  an object
+     * @param secondParam an object to be compared with {@code a} for deep equality
      * @return {@code true} if the arguments are deeply equal to each other and
      *         {@code false} otherwise
      * @see Arrays#deepEquals(Object[], Object[])
@@ -90,11 +86,9 @@ public final class Objects {
      * , {@code true} is returned and if exactly one argument is {@code null},
      * {@code false} is returned. Otherwise, equality is determined by using the
      * {@link Object#equals equals} method of the first argument.
-     * 
-     * @param firstParam
-     *            an object
-     * @param secondParam
-     *            an object to be compared with {@code a} for equality
+     *
+     * @param firstParam  an object
+     * @param secondParam an object to be compared with {@code a} for equality
      * @return {@code true} if the arguments are equal to each other and
      *         {@code false} otherwise
      * @see Object#equals(Object)
@@ -107,29 +101,28 @@ public final class Objects {
      * Generates a hash code for a sequence of input values. The hash code is
      * generated as if all the input values were placed into an array, and that
      * array were hashed by calling {@link Arrays#hashCode(Object[])}.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * This method is useful for implementing {@link Object#hashCode()} on
      * objects containing multiple fields. For example, if an object that has
      * three fields, {@code x}, {@code y}, and {@code z}, one could write:
-     * 
+     * <p/>
      * <blockquote>
-     * 
+     * <p/>
      * <pre>
      * &#064;Override
      * public int hashCode() {
      *     return Objects.hash(x, y, z);
      * }
      * </pre>
-     * 
+     * <p/>
      * </blockquote>
-     * 
+     * <p/>
      * <b>Warning: When a single object reference is supplied, the returned
      * value does not equal the hash code of that object reference.</b> This
      * value can be computed by calling {@link #hashCode(Object)}.
-     * 
-     * @param objectsParam
-     *            the values to be hashed
+     *
+     * @param objectsParam the values to be hashed
      * @return a hash value of the sequence of input values
      * @see Arrays#hashCode(Object[])
      * @see List#hashCode
@@ -141,9 +134,8 @@ public final class Objects {
     /**
      * Returns the hash code of a non-{@code null} argument and 0 for a
      * {@code null} argument.
-     * 
-     * @param objectParam
-     *            an object
+     *
+     * @param objectParam an object
      * @return the hash code of a non-{@code null} argument and 0 for a
      *         {@code null} argument
      * @see Object#hashCode
@@ -155,9 +147,8 @@ public final class Objects {
     /**
      * Returns the result of calling {@code toString} for a non-{@code null}
      * argument and {@code "null"} for a {@code null} argument.
-     * 
-     * @param objectParam
-     *            an object
+     *
+     * @param objectParam an object
      * @return the result of calling {@code toString} for a non-{@code null}
      *         argument and {@code "null"} for a {@code null} argument
      * @see Object#toString
@@ -171,17 +162,15 @@ public final class Objects {
      * Returns the result of calling {@code toString} on the first argument if
      * the first argument is not {@code null} and returns the second argument
      * otherwise.
-     * 
-     * @param objectParam
-     *            an object
-     * @param nullDefaultParam
-     *            string to return if the first argument is {@code null}
+     *
+     * @param objectParam      an object
+     * @param nullDefaultParam string to return if the first argument is {@code null}
      * @return the result of calling {@code toString} on the first argument if
      *         it is not {@code null} and the second argument otherwise.
      * @see Objects#toString(Object)
      */
     public static String toString(final Object objectParam, final String nullDefaultParam) {
-        ParamRequirements.INSTANCE.requireNotNull(nullDefaultParam);
+        PARAM_REQ.requireNotNull(nullDefaultParam);
         return objectParam != null ? objectParam.toString() : nullDefaultParam;
     }
 
