@@ -25,8 +25,13 @@ package com.googlecode.jbp.common.requirements;
  * @author Yannick LOTH   - yannick AT littlej.biz -
  */
 public final class PostCondition extends AbstractRequirements {
+    /**
+     * Singleton instance.
+     */
+    public static final PostCondition POST_COND = new PostCondition();
 
-    public static final PostCondition INSTANCE = new PostCondition();
+    @Deprecated
+    public static final PostCondition INSTANCE = POST_COND;
 
     /**
      * Private constructor. Throws a {@code IllegalStateException} if the

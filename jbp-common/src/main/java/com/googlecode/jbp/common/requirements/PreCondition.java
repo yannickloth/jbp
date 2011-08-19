@@ -25,8 +25,13 @@ package com.googlecode.jbp.common.requirements;
  * @author Yannick LOTH   - yannick AT littlej.biz -
  */
 public final class PreCondition extends AbstractRequirements {
+    /**
+     * Singleton instance.
+     */
+    public static final PreCondition PRE_COND = new PreCondition();
 
-    public static final PreCondition INSTANCE = new PreCondition();
+    @Deprecated
+    public static final PreCondition INSTANCE = PRE_COND;
 
     /**
      * Private constructor. Throws a {@code IllegalStateException} if the

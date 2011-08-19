@@ -39,7 +39,10 @@ public final class ParamRequirements extends AbstractRequirements {
     /**
      * Singleton instance.
      */
-    public static final ParamRequirements INSTANCE = new ParamRequirements();
+    public static final ParamRequirements PARAM_REQ = new ParamRequirements();
+    @Deprecated
+    public static final ParamRequirements INSTANCE = PARAM_REQ;
+
 
     /**
      * Private constructor. Throws a {@code IllegalStateException} if the

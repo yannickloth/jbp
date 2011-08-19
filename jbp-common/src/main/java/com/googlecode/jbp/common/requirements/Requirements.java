@@ -25,11 +25,13 @@ package com.googlecode.jbp.common.requirements;
  * @author Yannick LOTH   - yannick AT littlej.biz -
  */
 public final class Requirements extends AbstractRequirements {
-
     /**
      * Singleton instance.
      */
-    public static final Requirements INSTANCE = new Requirements();
+    public static final Requirements GENERIC_REQ = new Requirements();
+
+    @Deprecated
+    public static final Requirements INSTANCE = GENERIC_REQ;
 
     /**
      * Private constructor. Throws a {@code IllegalStateException} if the
