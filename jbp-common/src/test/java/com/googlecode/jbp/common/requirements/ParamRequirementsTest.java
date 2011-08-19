@@ -15,15 +15,17 @@
  */
 package com.googlecode.jbp.common.requirements;
 
+import org.testng.annotations.Test;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.testng.annotations.Test;
+import static com.googlecode.jbp.common.requirements.ParamRequirements.PARAM_REQ;
 
 /**
  * Unit tests for {@code ParamValidator} operations.
- * 
+ *
  * @author Yannick LOTH   - yannick AT littlej.biz -
  */
 public class ParamRequirementsTest {
@@ -33,85 +35,85 @@ public class ParamRequirementsTest {
         final List<String> list = new ArrayList<String>();
         list.add("String1");
         list.add("String2");
-        ParamRequirements.INSTANCE.requireAllInstanceOf(list, String.class);
+        PARAM_REQ.requireAllInstanceOf(list, String.class);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the class parameter is null",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testCollectionElementsInstanceOfWithNullClass() {
-        ParamRequirements.INSTANCE.requireAllInstanceOf(
+        PARAM_REQ.requireAllInstanceOf(
                 new ArrayList<String>(), null);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the collection parameter is null",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testCollectionElementsInstanceOfWithNullCollection() {
-        ParamRequirements.INSTANCE.requireAllInstanceOf(null, String.class);
+        PARAM_REQ.requireAllInstanceOf(null, String.class);
     }
 
     @Test(description = "should do nothing special")
     public void testCollectionElementsInstanceOfWithStringCollAndStringClass() {
-        ParamRequirements.INSTANCE.requireAllInstanceOf(
+        PARAM_REQ.requireAllInstanceOf(
                 new ArrayList<String>(), String.class);
     }
 
     @SuppressWarnings("unchecked")
     @Test(description = "should throw an IllegalArgumentException, as the collection contains other types than String",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testCollectionElementsInstanceOfWithUncheckedCollAndStringClass() {
         @SuppressWarnings("rawtypes")
         final List list = new ArrayList();
         list.add("String1");
         list.add(Double.MAX_VALUE);
-        ParamRequirements.INSTANCE.requireAllInstanceOf(list, String.class);
+        PARAM_REQ.requireAllInstanceOf(list, String.class);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is Integer and the class parameter is String",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testInstanceOfWithIntegerAndNullClass() {
-        ParamRequirements.INSTANCE.requireInstanceOf(3, String.class);
+        PARAM_REQ.requireInstanceOf(3, String.class);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is null",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testInstanceOfWithNullAndStringClass() {
-        ParamRequirements.INSTANCE.requireInstanceOf(null, String.class);
+        PARAM_REQ.requireInstanceOf(null, String.class);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the class parameter is null",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testInstanceOfWithStringAndNullClass() {
-        ParamRequirements.INSTANCE.requireInstanceOf("hi", null);
+        PARAM_REQ.requireInstanceOf("hi", null);
     }
 
     @Test(description = "should do nothing special")
     public void testInstanceOfWithStringAndStringClass() {
-        ParamRequirements.INSTANCE.requireInstanceOf("hi", String.class);
+        PARAM_REQ.requireInstanceOf("hi", String.class);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the String is an empty String",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testNotBlankWithEmptyString() {
-        ParamRequirements.INSTANCE.requireNotBlank("");
+        PARAM_REQ.requireNotBlank("");
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the String is null",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testNotBlankWithNull() {
-        ParamRequirements.INSTANCE.requireNotBlank(null);
+        PARAM_REQ.requireNotBlank(null);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the String is blank",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testNotBlankWithSpaces() {
-        ParamRequirements.INSTANCE.requireNotBlank("    ");
+        PARAM_REQ.requireNotBlank("    ");
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the Collection is empty",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testNotEmptyWithEmptyCollection() {
         final Collection<String> c = new ArrayList<String>();
-        ParamRequirements.INSTANCE.requireNotEmpty(c);
+        PARAM_REQ.requireNotEmpty(c);
     }
 
     @Test(description = "should do nothing special, as the Collection is filled")
@@ -119,100 +121,100 @@ public class ParamRequirementsTest {
         final Collection<String> c = new ArrayList<String>();
         c.add("String1");
         c.add("String2");
-        ParamRequirements.INSTANCE.requireNotEmpty(c);
+        PARAM_REQ.requireNotEmpty(c);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the Collection is null",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testNotEmptyWithNull() {
-        ParamRequirements.INSTANCE.requireNotEmpty(null);
+        PARAM_REQ.requireNotEmpty(null);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is negative",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testNotNegativeNorZeroWithNegativeInteger() {
-        ParamRequirements.INSTANCE.requireNotNegative(-10);
+        PARAM_REQ.requireNotNegative(-10);
     }
 
     @Test(description = "should do nothing special, as the parameter is positive")
     public void testNotNegativeNorZeroWithPositiveInteger() {
-        ParamRequirements.INSTANCE.requireNotNegative(10);
+        PARAM_REQ.requireNotNegative(10);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is zero",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testNotNegativeNorZeroWithZeroInteger() {
-        ParamRequirements.INSTANCE.requireNotNegative(0);
+        PARAM_REQ.requireNotNegative(0);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is negative",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testNotNegativeWithNegativeInteger() {
-        ParamRequirements.INSTANCE.requireNotStrictlyNegative(-10);
+        PARAM_REQ.requireNotStrictlyNegative(-10);
     }
 
     @Test(description = "should do nothing special, as the parameter is positive")
     public void testNotNegativeWithPositiveInteger() {
-        ParamRequirements.INSTANCE.requireNotStrictlyNegative(10);
+        PARAM_REQ.requireNotStrictlyNegative(10);
     }
 
     @Test(description = "should do nothing special, as the parameter is zero")
     public void testNotNegativeWithZeroInteger() {
-        ParamRequirements.INSTANCE.requireNotStrictlyNegative(0);
+        PARAM_REQ.requireNotStrictlyNegative(0);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is null",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testNotNullWithNull() {
-        ParamRequirements.INSTANCE.requireNotNull(null);
+        PARAM_REQ.requireNotNull(null);
     }
 
     @Test(description = "should do nothing special, as the Collection is filled")
     public void testNotNullWithString() {
-        ParamRequirements.INSTANCE.requireNotNull("notNullString");
+        PARAM_REQ.requireNotNull("notNullString");
     }
 
     @Test(description = "should do nothing special, as the parameter is negative")
     public void testNotPositiveNorZeroWithNegativeInteger() {
-        ParamRequirements.INSTANCE.requireNotPositive(-10);
+        PARAM_REQ.requireNotPositive(-10);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is positive",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testNotPositiveNorZeroWithPositiveInteger() {
-        ParamRequirements.INSTANCE.requireNotPositive(10);
+        PARAM_REQ.requireNotPositive(10);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is zero",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testNotPositiveNorZeroWithZeroInteger() {
-        ParamRequirements.INSTANCE.requireNotPositive(0);
+        PARAM_REQ.requireNotPositive(0);
     }
 
     @Test(description = "should do nothing special, as the parameter is negative")
     public void testNotPositiveWithNegativeInteger() {
-        ParamRequirements.INSTANCE.requireNotStrictlyPositive(-10);
+        PARAM_REQ.requireNotStrictlyPositive(-10);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is positive",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testNotPositiveWithPositiveInteger() {
-        ParamRequirements.INSTANCE.requireNotStrictlyPositive(10);
+        PARAM_REQ.requireNotStrictlyPositive(10);
     }
 
     @Test(description = "should do nothing special, as the parameter is zero")
     public void testNotPositiveWithZeroInteger() {
-        ParamRequirements.INSTANCE.requireNotStrictlyPositive(0);
+        PARAM_REQ.requireNotStrictlyPositive(0);
     }
 
     @Test(description = "should do nothing special, as the parameter is not zero")
     public void testNotZeroWithPositiveInteger() {
-        ParamRequirements.INSTANCE.requireNotZero(10);
+        PARAM_REQ.requireNotZero(10);
     }
 
     @Test(description = "should throw an IllegalArgumentException, as the parameter is zero",
-    expectedExceptions = {IllegalArgumentException.class})
+            expectedExceptions = {IllegalArgumentException.class})
     public void testNotZeroWithZeroInteger() {
-        ParamRequirements.INSTANCE.requireNotZero(0);
+        PARAM_REQ.requireNotZero(0);
     }
 }
