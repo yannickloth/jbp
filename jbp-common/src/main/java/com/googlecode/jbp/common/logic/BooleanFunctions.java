@@ -15,7 +15,7 @@
  */
 package com.googlecode.jbp.common.logic;
 
-import com.googlecode.jbp.common.requirements.ParamRequirements;
+import static com.googlecode.jbp.common.requirements.Reqs.PARAM_REQ;
 
 /**
  * Provides various boolean-valued methods.
@@ -33,7 +33,7 @@ public class BooleanFunctions {
      * {@code true}, {@code false} else.
      */
     public static boolean conjunction(final boolean... predicatesParam) {
-        ParamRequirements.INSTANCE.requireTrue(predicatesParam.length > 0);
+        PARAM_REQ.requireTrue(predicatesParam.length > 0);
         for (final boolean current : predicatesParam) {
             if (!current) {
                 return false;
@@ -51,7 +51,7 @@ public class BooleanFunctions {
      * {@code true}, {@code false} else.
      */
     public static boolean disjunction(final boolean... predicatesParam) {
-        ParamRequirements.INSTANCE.requireTrue(predicatesParam.length > 0);
+        PARAM_REQ.requireTrue(predicatesParam.length > 0);
         boolean disjunction = false;
         for (int i = 0; i < predicatesParam.length && !disjunction; ++i) {
             disjunction = disjunction || predicatesParam[i];
@@ -67,7 +67,7 @@ public class BooleanFunctions {
      *         {@code false} else.
      */
     public static boolean equivalent(final boolean... predicatesParam) {
-        ParamRequirements.INSTANCE.requireTrue(predicatesParam.length > 0);
+        PARAM_REQ.requireTrue(predicatesParam.length > 0);
         boolean equivalent = true;
         for (int i = 0; i < predicatesParam.length - 1 && equivalent; ++i) {
             equivalent = !exclusiveDisjunction(predicatesParam[i],
@@ -99,7 +99,7 @@ public class BooleanFunctions {
      *         predicates are {@code true}, {@code false} else.
      */
     public static boolean majority(final boolean... predicatesParam) {
-        ParamRequirements.INSTANCE.requireTrue(predicatesParam.length > 0);
+        PARAM_REQ.requireTrue(predicatesParam.length > 0);
         int count = 0;
         final int halfQuantity = predicatesParam.length / 2;
         for (int i = 0; i < predicatesParam.length && count <= halfQuantity; ++i) {
@@ -158,7 +158,7 @@ public class BooleanFunctions {
      *         order of the elements is unchanged.
      */
     public static boolean[] not(final boolean... predicatesParam) {
-        ParamRequirements.INSTANCE.requireTrue(predicatesParam.length > 0);
+        PARAM_REQ.requireTrue(predicatesParam.length > 0);
         final boolean[] notPredicates = new boolean[predicatesParam.length];
         for (int i = 0; i < predicatesParam.length; ++i) {
             notPredicates[i] = !predicatesParam[i];
