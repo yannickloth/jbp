@@ -53,7 +53,7 @@ public class GenericJpaRepository implements IGenericRepository {
 
     public GenericJpaRepository(final EntityManager entityManagerParam) {
         super();
-        PARAM_REQ.requireNotNull(entityManagerParam);
+        PARAM_REQ.Object.requireNotNull(entityManagerParam);
         entityManager = entityManagerParam;
     }
 
@@ -62,25 +62,25 @@ public class GenericJpaRepository implements IGenericRepository {
     }
 
     public final <ID extends Serializable, DomainModel extends IIdentifiable<ID>> DomainModel create(final DomainModel entity) {
-        PARAM_REQ.requireNotNull(entity);
+        PARAM_REQ.Object.requireNotNull(entity);
         getEntityManager().persist(entity);
         return entity;
     }
 
     protected final <ID extends Serializable, DomainModel extends IIdentifiable<ID>> CriteriaQuery<DomainModel> createCriteria(final Class<DomainModel> persistentClassParam) {
-        PARAM_REQ.requireNotNull(persistentClassParam);
+        PARAM_REQ.Object.requireNotNull(persistentClassParam);
         return getEntityManager().getCriteriaBuilder().createQuery(persistentClassParam);
     }
 
     public final <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void delete(final Collection<DomainModel> entities) {
-        PARAM_REQ.requireNotNull(entities);
+        PARAM_REQ.Object.requireNotNull(entities);
         for (final DomainModel current : entities) {
             delete(current);
         }
     }
 
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void delete(final DomainModel entity) {
-        PARAM_REQ.requireNotNull(entity);
+        PARAM_REQ.Object.requireNotNull(entity);
         final DomainModel merged = (DomainModel) entityManager.merge(
                 entity);
         getEntityManager().flush();
@@ -89,7 +89,7 @@ public class GenericJpaRepository implements IGenericRepository {
     }
 
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void delete(final ID id, final Class<DomainModel> persistentClassParam) {
-        PARAM_REQ.requireNotNull(id);
+        PARAM_REQ.Object.requireNotNull(id);
         final DomainModel entity = (DomainModel) getEntityManager().find(
                 persistentClassParam, id);
         if (entity != null) {
@@ -102,12 +102,12 @@ public class GenericJpaRepository implements IGenericRepository {
     }
 
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> boolean exists(final DomainModel entity) {
-        PARAM_REQ.requireNotNull(entity);
+        PARAM_REQ.Object.requireNotNull(entity);
         return getEntityManager().find(entity.getClass(), entity.getId()) != null;
     }
 
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> boolean exists(final ID id, final Class<DomainModel> persistentClassParam) {
-        PARAM_REQ.requireNotNull(id);
+        PARAM_REQ.Object.requireNotNull(id);
         return getEntityManager().find(persistentClassParam, id) != null;
     }
 
@@ -132,26 +132,26 @@ public class GenericJpaRepository implements IGenericRepository {
 
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> List<DomainModel> retrieveAll(final Class<DomainModel> persistentClassParam, final Page pageParam) {
-        PARAM_REQ.requireNotNull(pageParam);
-        PARAM_REQ.requireNotStrictlyNegative(pageParam.getFirstResult());
-        PARAM_REQ.requireNotStrictlyNegative(pageParam.getMaxResults());
+        PARAM_REQ.Object.requireNotNull(pageParam);
+        PARAM_REQ.Number.requireNotStrictlyNegative(pageParam.getFirstResult());
+        PARAM_REQ.Number.requireNotStrictlyNegative(pageParam.getMaxResults());
         getEntityManager().flush();
         final TypedQuery<DomainModel> q = buildQueryForRetrieveAll(persistentClassParam);
         return addPagingToQuery(q, pageParam).getResultList();
     }
 
     protected final TypedQuery addPagingToQuery(final TypedQuery queryParam, final Page pageParam) {
-        PARAM_REQ.requireNotNull(queryParam);
-        PARAM_REQ.requireNotNull(pageParam);
-        PARAM_REQ.requireNotStrictlyNegative(pageParam.getFirstResult());
-        PARAM_REQ.requireNotStrictlyNegative(pageParam.getMaxResults());
+        PARAM_REQ.Object.requireNotNull(queryParam);
+        PARAM_REQ.Object.requireNotNull(pageParam);
+        PARAM_REQ.Number.requireNotStrictlyNegative(pageParam.getFirstResult());
+        PARAM_REQ.Number.requireNotStrictlyNegative(pageParam.getMaxResults());
         queryParam.setFirstResult(pageParam.getFirstResult()).setMaxResults(pageParam.getMaxResults());
         return queryParam;
     }
 
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> DomainModel retrieveById(final Class<DomainModel> persistentClassParam, final ID id) {
-        PARAM_REQ.requireNotNull(id);
+        PARAM_REQ.Object.requireNotNull(id);
         final DomainModel entity = getEntityManager().find(
                 persistentClassParam, id);
         return entity;
@@ -159,7 +159,7 @@ public class GenericJpaRepository implements IGenericRepository {
 
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void update(final Collection<DomainModel> entities) {
-        PARAM_REQ.requireNotNull(entities);
+        PARAM_REQ.Object.requireNotNull(entities);
         for (final DomainModel current : entities) {
             getEntityManager()
                     .merge(current);
@@ -168,7 +168,7 @@ public class GenericJpaRepository implements IGenericRepository {
 
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void update(final DomainModel entity) {
-        PARAM_REQ.requireNotNull(entity);
+        PARAM_REQ.Object.requireNotNull(entity);
         getEntityManager().merge(
                 entity);
     }

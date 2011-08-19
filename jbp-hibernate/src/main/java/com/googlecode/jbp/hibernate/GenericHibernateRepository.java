@@ -53,7 +53,7 @@ public class GenericHibernateRepository implements IGenericRepository {
 
     public GenericHibernateRepository(final SessionFactory sessionFactoryParam) {
         super();
-        PARAM_REQ.requireNotNull(sessionFactoryParam);
+        PARAM_REQ.Object.requireNotNull(sessionFactoryParam);
         sessionFactory = sessionFactoryParam;
     }
 
@@ -62,25 +62,25 @@ public class GenericHibernateRepository implements IGenericRepository {
     }
 
     public final <ID extends Serializable, DomainModel extends IIdentifiable<ID>> DomainModel create(final DomainModel entity) {
-        PARAM_REQ.requireNotNull(entity);
+        PARAM_REQ.Object.requireNotNull(entity);
         getSession().persist(entity);
         return entity;
     }
 
     protected final <ID extends Serializable, DomainModel extends IIdentifiable<ID>, PersistenceModel extends DomainModel> Criteria createCriteria(final Class<PersistenceModel> persistentClassParam) {
-        PARAM_REQ.requireNotNull(persistentClassParam);
+        PARAM_REQ.Object.requireNotNull(persistentClassParam);
         return getSession().createCriteria(persistentClassParam);
     }
 
     public final <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void delete(final Collection<DomainModel> entities) {
-        PARAM_REQ.requireNotNull(entities);
+        PARAM_REQ.Object.requireNotNull(entities);
         for (final DomainModel current : entities) {
             delete(current);
         }
     }
 
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void delete(final DomainModel entity) {
-        PARAM_REQ.requireNotNull(entity);
+        PARAM_REQ.Object.requireNotNull(entity);
         final DomainModel merged = (DomainModel) getSession().merge(
                 entity);
         getSession().flush();
@@ -89,7 +89,7 @@ public class GenericHibernateRepository implements IGenericRepository {
     }
 
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void delete(final ID id, final Class<DomainModel> persistentClassParam) {
-        PARAM_REQ.requireNotNull(id);
+        PARAM_REQ.Object.requireNotNull(id);
         final DomainModel entity = (DomainModel) getSession().get(
                 persistentClassParam, id);
         if (entity != null) {
@@ -102,12 +102,12 @@ public class GenericHibernateRepository implements IGenericRepository {
     }
 
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> boolean exists(final DomainModel entity) {
-        PARAM_REQ.requireNotNull(entity);
+        PARAM_REQ.Object.requireNotNull(entity);
         return getSession().get(entity.getClass(), entity.getId()) != null;
     }
 
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> boolean exists(final ID id, final Class<DomainModel> persistentClassParam) {
-        PARAM_REQ.requireNotNull(id);
+        PARAM_REQ.Object.requireNotNull(id);
         return getSession().get(persistentClassParam, id) != null;
     }
 
@@ -124,26 +124,26 @@ public class GenericHibernateRepository implements IGenericRepository {
 
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> List<DomainModel> retrieveAll(final Class<DomainModel> persistentClassParam, final Page pageParam) {
-        PARAM_REQ.requireNotNull(pageParam);
-        PARAM_REQ.requireNotStrictlyNegative(pageParam.getFirstResult());
-        PARAM_REQ.requireNotStrictlyNegative(pageParam.getMaxResults());
+        PARAM_REQ.Object.requireNotNull(pageParam);
+        PARAM_REQ.Number.requireNotStrictlyNegative(pageParam.getFirstResult());
+        PARAM_REQ.Number.requireNotStrictlyNegative(pageParam.getMaxResults());
         getSession().flush();
         return addPagingToCriteria(getSession().createCriteria(persistentClassParam), pageParam)
                 .list();
     }
 
     protected final Criteria addPagingToCriteria(final Criteria criteriaParam, final Page pageParam) {
-        PARAM_REQ.requireNotNull(criteriaParam);
-        PARAM_REQ.requireNotNull(pageParam);
-        PARAM_REQ.requireNotStrictlyNegative(pageParam.getFirstResult());
-        PARAM_REQ.requireNotStrictlyNegative(pageParam.getMaxResults());
+        PARAM_REQ.Object.requireNotNull(criteriaParam);
+        PARAM_REQ.Object.requireNotNull(pageParam);
+        PARAM_REQ.Number.requireNotStrictlyNegative(pageParam.getFirstResult());
+        PARAM_REQ.Number.requireNotStrictlyNegative(pageParam.getMaxResults());
         criteriaParam.setFirstResult(pageParam.getFirstResult()).setMaxResults(pageParam.getMaxResults());
         return criteriaParam;
     }
 
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> DomainModel retrieveById(final Class<DomainModel> persistentClassParam, final ID id) {
-        PARAM_REQ.requireNotNull(id);
+        PARAM_REQ.Object.requireNotNull(id);
         final DomainModel entity = (DomainModel) getSession().get(
                 persistentClassParam, id);
         if (entity != null) {
@@ -154,7 +154,7 @@ public class GenericHibernateRepository implements IGenericRepository {
 
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void update(final Collection<DomainModel> entities) {
-        PARAM_REQ.requireNotNull(entities);
+        PARAM_REQ.Object.requireNotNull(entities);
         for (final DomainModel current : entities) {
             final DomainModel merged = (DomainModel) getSession()
                     .merge(current);
@@ -164,7 +164,7 @@ public class GenericHibernateRepository implements IGenericRepository {
 
     @SuppressWarnings(CompilerWarnings.UNCHECKED)
     public <ID extends Serializable, DomainModel extends IIdentifiable<ID>> void update(final DomainModel entity) {
-        PARAM_REQ.requireNotNull(entity);
+        PARAM_REQ.Object.requireNotNull(entity);
         final DomainModel merged = (DomainModel) getSession().merge(
                 entity);
         getSession().saveOrUpdate(merged);
