@@ -15,11 +15,11 @@
  */
 package com.googlecode.jbp.common.repository;
 
-import com.googlecode.jbp.common.requirements.ParamRequirements;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+
+import static com.googlecode.jbp.common.requirements.Reqs.PARAM_REQ;
 
 /**
  * Class used to return the actual result list and the total number of results
@@ -36,8 +36,8 @@ public final class ResultHolder<ID extends Serializable, T extends IIdentifiable
     private final int resultQuantity;
 
     public ResultHolder(final List<T> resultsParam, final int resultQuantityParam) {
-        ParamRequirements.INSTANCE.requireNotNull(resultsParam);
-        ParamRequirements.INSTANCE.requireNotStrictlyNegative(resultQuantityParam);
+        PARAM_REQ.requireNotNull(resultsParam);
+        PARAM_REQ.requireNotStrictlyNegative(resultQuantityParam);
         results = Collections.unmodifiableList(resultsParam);
         resultQuantity = resultQuantityParam;
     }

@@ -15,22 +15,25 @@
  */
 package com.googlecode.jbp.common.repository;
 
-import com.googlecode.jbp.common.requirements.ParamRequirements;
 import com.googlecode.jbp.common.util.Objects;
+
 import java.io.Serializable;
 
+import static com.googlecode.jbp.common.requirements.Reqs.PARAM_REQ;
+
 /**
- * This class represents paging information for use in object repositories.  The 
+ * This class represents paging information for use in object repositories.  The
  * page is represented using the begin position and the length of the page.
  * <p>
- * Many object retrieval methods may use pagination.  Page coordinates are thus 
+ * Many object retrieval methods may use pagination.  Page coordinates are thus
  * passed as parameters to these methods.  As these coordinates belong together,
- * it's better to have one single argument representing the page concept than 
+ * it's better to have one single argument representing the page concept than
  * having two separate arguments.
  * </p>
  * <p>A Page instance may be instantiated like this:
  * {@code Page.newPage().begin(30).length(10);}
  * </p>
+ *
  * @author Yannick LOTH   - yannick AT littlej.biz -
  */
 public final class Page implements Serializable {
@@ -57,7 +60,7 @@ public final class Page implements Serializable {
     }
 
     public final Page firstResult(final int firstResultParam) {
-        ParamRequirements.INSTANCE.requireNotStrictlyNegative(firstResultParam);
+        PARAM_REQ.requireNotStrictlyNegative(firstResultParam);
         firstResult = firstResultParam;
         return this;
     }
@@ -81,7 +84,7 @@ public final class Page implements Serializable {
     }
 
     public final Page maxResults(final int maxResultsParam) {
-        ParamRequirements.INSTANCE.requireNotNegative(maxResultsParam);
+        PARAM_REQ.requireNotNegative(maxResultsParam);
         maxResults = maxResultsParam;
         return this;
     }
