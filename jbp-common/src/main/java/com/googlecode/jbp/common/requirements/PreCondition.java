@@ -38,7 +38,7 @@ public final class PreCondition extends AbstractRequirements {
      * singleton is already instanciated.
      */
     private PreCondition() {
-        if (INSTANCE != null) {
+        if (PRE_COND != null) {
             throw new IllegalStateException(
                     "This class must not be instanciated");
         }

@@ -38,7 +38,7 @@ public final class Requirements extends AbstractRequirements {
      * singleton is already instanciated.
      */
     private Requirements() {
-        if (INSTANCE != null) {
+        if (GENERIC_REQ != null) {
             throw new IllegalStateException(
                     "This class must not be instanciated");
         }

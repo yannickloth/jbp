@@ -28,7 +28,7 @@ package com.googlecode.jbp.common.requirements;
  * instead of
  * {@code
  * if (firstParameter == null) {
- *    throw new IllegalArgumentException("First parameter must not be null.");
+ * throw new IllegalArgumentException("First parameter must not be null.");
  * }      }
  * </p>
  *
@@ -49,6 +49,10 @@ public final class ParamRequirements extends AbstractRequirements {
      * singleton is already instantiated.
      */
     private ParamRequirements() {
+        if (PARAM_REQ != null) {
+            throw new IllegalStateException(
+                    "This class must not be instanciated");
+        }
     }
 
     @Override

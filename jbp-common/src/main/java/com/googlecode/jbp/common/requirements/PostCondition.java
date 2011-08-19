@@ -38,7 +38,7 @@ public final class PostCondition extends AbstractRequirements {
      * singleton is already instanciated.
      */
     private PostCondition() {
-        if (INSTANCE != null) {
+        if (POST_COND != null) {
             throw new IllegalStateException(
                     "This class must not be instanciated");
         }
