@@ -22,6 +22,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
+import static com.googlecode.jbp.common.requirements.Reqs.PARAM_REQ;
+
 /**
  * Abstract implementation of {@code IRequirements} which provides the
  * checks but not the action that has to be taken if a condition is not met. All
@@ -37,7 +39,7 @@ public abstract class AbstractRequirements implements IRequirements {
 
     private String concatenateStrings(final String stringParam,
                                       final String... stringsParam) {
-        ParamRequirements.INSTANCE.requireNotNull(stringParam);
+        PARAM_REQ.requireNotNull(stringParam);
         String result = stringParam;
         if (stringsParam != null) {
             final StringBuilder sb = new StringBuilder(stringParam);
@@ -73,7 +75,7 @@ public abstract class AbstractRequirements implements IRequirements {
     }
 
     public final boolean requireConjunction(final boolean... predicatesParam) {
-        ParamRequirements.INSTANCE.requireTrue(predicatesParam.length > 0);
+        PARAM_REQ.requireTrue(predicatesParam.length > 0);
         for (final boolean current : predicatesParam) {
             if (!current) {
                 onConditionNotMet("Requires the conjunction of all predicates (all must be 'true').");
@@ -84,7 +86,7 @@ public abstract class AbstractRequirements implements IRequirements {
 
     public final File requireDirectory(final File fileParam,
                                        final String... messagesParam) {
-        ParamRequirements.INSTANCE.requireNotNull(fileParam);
+        PARAM_REQ.requireNotNull(fileParam);
         if (!fileParam.isDirectory()) {
             final String message = concatenateStrings(
                     "Requires that file is a directory: ".concat(fileParam.getPath()), messagesParam);
@@ -95,7 +97,7 @@ public abstract class AbstractRequirements implements IRequirements {
 
     public final String requireDirectory(final String filePathParam,
                                          final String... messagesParam) {
-        ParamRequirements.INSTANCE.requireNotBlank(filePathParam);
+        PARAM_REQ.requireNotBlank(filePathParam);
         final File file = new File(filePathParam);
         if (!file.isDirectory()) {
             final String message = concatenateStrings(
@@ -107,7 +109,7 @@ public abstract class AbstractRequirements implements IRequirements {
     }
 
     public final boolean requireDisjunction(final boolean... predicatesParam) {
-        ParamRequirements.INSTANCE.requireTrue(predicatesParam.length > 0);
+        PARAM_REQ.requireTrue(predicatesParam.length > 0);
         boolean currentDisjunction = false;
         for (int i = 0; i < predicatesParam.length && !currentDisjunction; ++i) {
             currentDisjunction = predicatesParam[i];
@@ -129,7 +131,7 @@ public abstract class AbstractRequirements implements IRequirements {
 
     public final File requireExistingFile(final File fileParam,
                                           final String... messagesParam) {
-        ParamRequirements.INSTANCE.requireNotNull(fileParam);
+        PARAM_REQ.requireNotNull(fileParam);
         if (!fileParam.exists()) {
             final String message = concatenateStrings(
                     "Requires that file exists: ".concat(fileParam.getPath()),
@@ -141,7 +143,7 @@ public abstract class AbstractRequirements implements IRequirements {
 
     public final String requireExistingFile(final String filePathParam,
                                             final String... messagesParam) {
-        ParamRequirements.INSTANCE.requireNotBlank(filePathParam);
+        PARAM_REQ.requireNotBlank(filePathParam);
         final File file = new File(filePathParam);
         if (!file.exists()) {
             final String message = concatenateStrings(
@@ -166,7 +168,7 @@ public abstract class AbstractRequirements implements IRequirements {
 
     public final Calendar requireFutureInstant(final Calendar calendarParam,
                                                final String... messagesParam) {
-        ParamRequirements.INSTANCE.requireNotNull(calendarParam);
+        PARAM_REQ.requireNotNull(calendarParam);
         if (calendarParam.before(new Date())) {
             final String message = "Passed calendar must not be a past date.";
             onConditionNotMet(message);
@@ -176,7 +178,7 @@ public abstract class AbstractRequirements implements IRequirements {
 
     public final Date requireFutureInstant(final Date dateParam,
                                            final String... messagesParam) {
-        ParamRequirements.INSTANCE.requireNotNull(dateParam);
+        PARAM_REQ.requireNotNull(dateParam);
         if (dateParam.before(new Date())) {
             final String message = "Passed date must not be a past date.";
             onConditionNotMet(message);
@@ -252,7 +254,7 @@ public abstract class AbstractRequirements implements IRequirements {
 
     public final File requireNotExistingFile(final File fileParam,
                                              final String... messagesParam) {
-        ParamRequirements.INSTANCE.requireNotNull(fileParam);
+        PARAM_REQ.requireNotNull(fileParam);
         if (fileParam.exists()) {
             final String message = concatenateStrings(
                     "Requires that file does not exist: ".concat(fileParam.getPath()), messagesParam);
@@ -264,7 +266,7 @@ public abstract class AbstractRequirements implements IRequirements {
 
     public final String requireNotExistingFile(final String filePathParam,
                                                final String... messagesParam) {
-        ParamRequirements.INSTANCE.requireNotBlank(filePathParam);
+        PARAM_REQ.requireNotBlank(filePathParam);
         final File file = new File(filePathParam);
         if (file.exists()) {
             final String message = concatenateStrings(
@@ -394,7 +396,7 @@ public abstract class AbstractRequirements implements IRequirements {
 
     public final Calendar requirePastInstant(final Calendar calendarParam,
                                              final String... messagesParam) {
-        ParamRequirements.INSTANCE.requireNotNull(calendarParam);
+        PARAM_REQ.requireNotNull(calendarParam);
         if (calendarParam.after(new Date())) {
             final String message = "Passed calendar must not be a past date.";
             onConditionNotMet(message);
@@ -404,7 +406,7 @@ public abstract class AbstractRequirements implements IRequirements {
 
     public final Date requirePastInstant(final Date dateParam,
                                          final String... messagesParam) {
-        ParamRequirements.INSTANCE.requireNotNull(dateParam);
+        PARAM_REQ.requireNotNull(dateParam);
         if (dateParam.after(new Date())) {
             final String message = "Passed date must not be a future date.";
             onConditionNotMet(message);
