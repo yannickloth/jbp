@@ -16,10 +16,13 @@
 package com.googlecode.jbp.common.requirements;
 
 /**
- * Exception thrown when a requirement is not met.
- * 
+ * Provides useful methods to check if generic requirements are met.
+ * <p>
+ * Unless explicitly stated, these methods throw a
+ * {@code RequirementsException} if the requirement condition is not met.
+ * </p>
+ *
  * @author Yannick LOTH   - yannick AT littlej.biz -
- * 
  */
 public final class Requirements extends AbstractRequirements {
 
