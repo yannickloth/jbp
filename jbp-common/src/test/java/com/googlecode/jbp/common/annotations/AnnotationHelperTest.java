@@ -71,4 +71,27 @@ public class AnnotationHelperTest {
     public void testGetQualifiedAnnotationsObjectClassParamNull() {
         AnnotationHelper.getQualifiedAnnotations(null, null);
     }
+
+    @Test
+    public void testIsQualifiedAnnotationParamTrue() {
+        Assert.assertTrue(AnnotationHelper.isQualifiedAnnotation(QualifiedAnnotation.class
+                , QualifyingAnnotation.class), "Qualified annotation is not recognized as qualified but should be!");
+    }
+
+    @Test
+    public void testIsQualifiedAnnotationParamFalse() {
+        Assert.assertFalse(AnnotationHelper.isQualifiedAnnotation(NotQualifiedAnnotation.class
+                , QualifyingAnnotation.class), "Qualified annotation is recognized as qualified but should not be!");
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testIsQualifiedAnnotationParamQualifiedClassNull() {
+        AnnotationHelper.isQualifiedAnnotation(null, null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testIsQualifiedAnnotationParamQualifyingClassNull() {
+        AnnotationHelper.isQualifiedAnnotation(QualifiedAnnotation.class, null);
+    }
+
 }

@@ -67,6 +67,11 @@ public final class AnnotationHelper {
      * @return {@code true} if the annotations is qualified, {@code false} else.
      */
     public static boolean isQualifiedAnnotation(final Class<? extends Annotation> annotationClassParam, final Class<? extends Annotation> annotationQualifierClassParam) {
+        PARAM_REQ.Object.requireNotNull(annotationClassParam, "Qualified annotation's class parameter must not be null.");
+        PARAM_REQ.Object.requireNotNull(annotationQualifierClassParam, "Qualifying annotation's class parameter must not be null.");
+        if(annotationClassParam.isAnnotationPresent(annotationQualifierClassParam)){
+            return true;
+        }
         final Class<?>[] interfaces = annotationClassParam.getInterfaces();
         for (final Class<?> current : interfaces) {
             if (current.isAnnotationPresent(annotationQualifierClassParam)) {
@@ -84,8 +89,8 @@ public final class AnnotationHelper {
      * @return A {@code List<Annotation>} with all found qualified annotations on the class.  May be an empty list, but must not be {@code null}.
      */
     public static List<Annotation> getQualifiedAnnotations(final Class<?> classParam, final Class<? extends Annotation> annotationQualifierClass) {
-        PARAM_REQ.Object.requireNotNull(classParam,"The annotated class must not be null.");
-        PARAM_REQ.Object.requireNotNull(annotationQualifierClass,"The qualifying annotation class must not be null.");
+        PARAM_REQ.Object.requireNotNull(classParam, "The annotated class must not be null.");
+        PARAM_REQ.Object.requireNotNull(annotationQualifierClass, "The qualifying annotation class must not be null.");
         final Target targetAnnot = annotationQualifierClass.getAnnotation(Target.class);
         final ElementType[] elementTypes = targetAnnot.value();
         PARAM_REQ.Logic.requireTrue(Arrays.asList(elementTypes).contains(ElementType.ANNOTATION_TYPE), "The specified annotations qualifier class must have the target element type ANNOTATION_TYPE, but does not.");
