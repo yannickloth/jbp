@@ -20,7 +20,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.lang.annotation.Annotation;
-import java.util.List;
+import java.util.Set;
 
 public class AnnotationHelperTest {
 
@@ -46,19 +46,19 @@ public class AnnotationHelperTest {
 
     @Test
     public void testGetQualifiedAnnotationsNone() {
-        List<Annotation> annots = AnnotationHelper.getQualifiedAnnotations(getClass(), QualifyingAnnotation.class);
+        Set<Annotation> annots = AnnotationHelper.getQualifiedAnnotations(getClass(), QualifyingAnnotation.class);
         Assert.assertEquals(annots.size(), 0, "No qualified annotations should be returned in the list.");
     }
 
     @Test
     public void testGetQualifiedAnnotationsOne() {
-        List<Annotation> annots = AnnotationHelper.getQualifiedAnnotations(AnnotatedClass.class, QualifyingAnnotation.class);
+        Set<Annotation> annots = AnnotationHelper.getQualifiedAnnotations(AnnotatedClass.class, QualifyingAnnotation.class);
         Assert.assertEquals(annots.size(), 1, "Exactly one qualified annotations should be returned in the list.");
     }
 
     @Test
     public void testGetQualifiedAnnotationsTwo() {
-        List<Annotation> annots = AnnotationHelper.getQualifiedAnnotations(TwiceAnnotatedClass.class, QualifyingAnnotation.class);
+        Set<Annotation> annots = AnnotationHelper.getQualifiedAnnotations(TwiceAnnotatedClass.class, QualifyingAnnotation.class);
         Assert.assertEquals(annots.size(), 2, "Exactly two qualified annotations should be returned in the list.");
     }
 
@@ -71,27 +71,4 @@ public class AnnotationHelperTest {
     public void testGetQualifiedAnnotationsObjectClassParamNull() {
         AnnotationHelper.getQualifiedAnnotations(null, null);
     }
-
-    @Test
-    public void testIsQualifiedAnnotationParamTrue() {
-        Assert.assertTrue(AnnotationHelper.isQualifiedAnnotation(QualifiedAnnotation.class
-                , QualifyingAnnotation.class), "Qualified annotation is not recognized as qualified but should be!");
-    }
-
-    @Test
-    public void testIsQualifiedAnnotationParamFalse() {
-        Assert.assertFalse(AnnotationHelper.isQualifiedAnnotation(NotQualifiedAnnotation.class
-                , QualifyingAnnotation.class), "Qualified annotation is recognized as qualified but should not be!");
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testIsQualifiedAnnotationParamQualifiedClassNull() {
-        AnnotationHelper.isQualifiedAnnotation(null, null);
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testIsQualifiedAnnotationParamQualifyingClassNull() {
-        AnnotationHelper.isQualifiedAnnotation(QualifiedAnnotation.class, null);
-    }
-
 }

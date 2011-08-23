@@ -19,10 +19,10 @@ package com.googlecode.jbp.common.annotations;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static com.googlecode.jbp.common.requirements.Reqs.PARAM_REQ;
 
@@ -44,41 +44,23 @@ public final class AnnotationHelper {
      * @return {@code true} if the class has a qualified annotations, {@code false} else.
      */
     public static boolean isQualifiedAnnotationPresent(final Class<?> classParam, final Class<? extends Annotation> annotationQualifierClass) {
-        PARAM_REQ.Object.requireNotNull(classParam, "The class that may be annotated must not be null.");
-        PARAM_REQ.Object.requireNotNull(annotationQualifierClass, "The qualifying annotation's class must not be null.");
-        final Target targetAnnot = annotationQualifierClass.getAnnotation(Target.class);
-        final ElementType[] elementTypes = targetAnnot.value();
-        PARAM_REQ.Logic.requireTrue(Arrays.asList(elementTypes).contains(ElementType.ANNOTATION_TYPE), "The specified annotations qualifier class must have the target element type ANNOTATION_TYPE, but does not.");
-        PARAM_REQ.Logic.requireTrue(annotationQualifierClass.isAnnotation(), "Parameter 'annotationQualifierClass' must be the Class of an annotations type, but is not.");
+        validateParametersForQualifiedAnnotationsOperations(classParam, annotationQualifierClass);
         final Annotation[] annotations = classParam.getAnnotations();
         for (final Annotation annotation : annotations) {
-            if (isQualifiedAnnotation(annotation.getClass(), annotationQualifierClass)) {
+            if (annotation.annotationType().isAnnotationPresent(annotationQualifierClass)) {
                 return true;
             }
         }
         return false;
     }
 
-    /**
-     * Checks if the annotations is qualified by another annotations.
-     *
-     * @param annotationClassParam          The annotations that may be qualified.
-     * @param annotationQualifierClassParam The annotations that may qualify other annotations.
-     * @return {@code true} if the annotations is qualified, {@code false} else.
-     */
-    public static boolean isQualifiedAnnotation(final Class<? extends Annotation> annotationClassParam, final Class<? extends Annotation> annotationQualifierClassParam) {
-        PARAM_REQ.Object.requireNotNull(annotationClassParam, "Qualified annotation's class parameter must not be null.");
-        PARAM_REQ.Object.requireNotNull(annotationQualifierClassParam, "Qualifying annotation's class parameter must not be null.");
-        if(annotationClassParam.isAnnotationPresent(annotationQualifierClassParam)){
-            return true;
-        }
-        final Class<?>[] interfaces = annotationClassParam.getInterfaces();
-        for (final Class<?> current : interfaces) {
-            if (current.isAnnotationPresent(annotationQualifierClassParam)) {
-                return true;
-            }
-        }
-        return false;
+    private static void validateParametersForQualifiedAnnotationsOperations(final Class<?> classParam, final Class<? extends Annotation> annotationQualifierClass) {
+        PARAM_REQ.Object.requireNotNull(classParam, "The annotated class must not be null.");
+        PARAM_REQ.Object.requireNotNull(annotationQualifierClass, "The qualifying annotation class must not be null.");
+        final Target targetAnnot = annotationQualifierClass.getAnnotation(Target.class);
+        final ElementType[] elementTypes = targetAnnot.value();
+        PARAM_REQ.Logic.requireTrue(Arrays.asList(elementTypes).contains(ElementType.ANNOTATION_TYPE), "The specified annotations qualifier class must have the target element type ANNOTATION_TYPE, but does not.");
+        PARAM_REQ.Logic.requireTrue(annotationQualifierClass.isAnnotation(), "Parameter 'annotationQualifierClass' must be the Class of an annotations type, but is not.");
     }
 
     /**
@@ -86,22 +68,17 @@ public final class AnnotationHelper {
      *
      * @param classParam               The class that may have qualified annotations.
      * @param annotationQualifierClass The class of the annotations that may qualify other annotations.
-     * @return A {@code List<Annotation>} with all found qualified annotations on the class.  May be an empty list, but must not be {@code null}.
+     * @return A {@code Set<Annotation>} with all found qualified annotations on the class.  May be an empty list, but must not be {@code null}.
      */
-    public static List<Annotation> getQualifiedAnnotations(final Class<?> classParam, final Class<? extends Annotation> annotationQualifierClass) {
-        PARAM_REQ.Object.requireNotNull(classParam, "The annotated class must not be null.");
-        PARAM_REQ.Object.requireNotNull(annotationQualifierClass, "The qualifying annotation class must not be null.");
-        final Target targetAnnot = annotationQualifierClass.getAnnotation(Target.class);
-        final ElementType[] elementTypes = targetAnnot.value();
-        PARAM_REQ.Logic.requireTrue(Arrays.asList(elementTypes).contains(ElementType.ANNOTATION_TYPE), "The specified annotations qualifier class must have the target element type ANNOTATION_TYPE, but does not.");
-        PARAM_REQ.Logic.requireTrue(annotationQualifierClass.isAnnotation(), "Parameter 'annotationQualifierClass' must be the Class of an annotations type, but is not.");
-        final List<Annotation> qualifiedAnnotations = new ArrayList<Annotation>();
+    public static Set<Annotation> getQualifiedAnnotations(final Class<?> classParam, final Class<? extends Annotation> annotationQualifierClass) {
+        validateParametersForQualifiedAnnotationsOperations(classParam, annotationQualifierClass);
+        final Set<Annotation> qualifiedAnnotations = new HashSet<Annotation>();
         final Annotation[] annotations = classParam.getAnnotations();
         for (final Annotation annotation : annotations) {
-            if (isQualifiedAnnotation(annotation.getClass(), annotationQualifierClass)) {
+            if (annotation.annotationType().isAnnotationPresent(annotationQualifierClass)) {
                 qualifiedAnnotations.add(annotation);
             }
         }
-        return Collections.unmodifiableList(qualifiedAnnotations);
+        return Collections.unmodifiableSet(qualifiedAnnotations);
     }
 }
